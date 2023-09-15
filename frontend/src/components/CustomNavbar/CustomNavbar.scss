@@ -1,0 +1,67 @@
+.notification-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 10px;
+    height: 10px;
+    background-color: green;
+    border-radius: 50%;
+  }
+
+  // .navbar {
+  //   position: fixed !important;
+  //   top: 0;
+  //   width: 100%;
+  //   z-index: 10;
+  //   background-color: rgba(29, 21, 21, 0.451) !important;
+    
+  // }
+  .navbar {
+    position: relative !important;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+    background-color: rgb(241, 241, 249) !important;
+    color: black !important;
+    .logo{
+      color: black !important;
+    }
+    .text-color{
+      color: black !important;
+    }
+  }
+  
+  .navbar.scrolled {
+    background-color: black !important;
+  }
+
+  .navbar.addstyle{
+    position: relative !important;
+    width: 100%;
+    z-index: 10;
+    background-color: rgb(255, 255, 255) !important;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+  }
+  
+  .text-color{
+    color: white !important;
+  }
+
+  .logo{
+    font-weight: bold !important;
+  }
+
+  .current-user{
+    span{
+      color: gray;
+      font-weight: bold;
+    }
+    .role-user{
+      background-color: #9bf1c3 !important;
+      padding: .6rem;
+      text-transform: uppercase;
+      color: white;
+      border-radius: 1rem;
+    }
+
+  }

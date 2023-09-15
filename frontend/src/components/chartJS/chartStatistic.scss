@@ -1,0 +1,18 @@
+.graphics{
+    .change-graphics{
+        margin: 1rem 1rem;
+        border-radius: .4rem;
+        border: 0;
+        box-shadow: rgba(0, 0, 0, 0.2) 0px 20px 30px;
+      }
+      .change-graphics:hover{
+          color: black;
+        box-shadow: rgba(0, 0, 0, 0.187) 0px 5px 30px 2px;
+      }
+    .active-btn{
+        color: gray ;
+    }
+    .remove-active{
+        color: gray ;
+    }
+}

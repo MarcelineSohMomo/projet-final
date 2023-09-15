@@ -1,0 +1,92 @@
+.commandes{
+    margin-top: 2rem;
+    text-transform: uppercase !important;
+    color: gray !important;
+    font-weight: bold;
+    font-size: .8rem;
+}
+.small-commande-card{
+  .icon{
+    margin-top: 1rem;
+    span{
+        margin-right: 1rem;
+        text-align: center;
+        padding:.4rem;
+        border-radius: .6rem;
+        box-shadow: -15px -15px 15px rgba(255,255,255,0.2), 15px 15px 15px rgba(0,0,0,0.1), inset -5px -5px 5px rgba(255,255,255,0.2), inset 5px 5px 5px rgba(0,0,0,0.1);
+        cursor: pointer;
+        transition: all .3s ease-in;
+
+    }
+    span:hover{
+        padding: .2rem;
+        background-color: aqua;
+    }
+  }
+
+
+    .small-services-content{
+        box-shadow: rgba(0, 0, 0, 0.5) 0px 18px 50px -10px;
+        border-radius: 1rem;
+
+        
+        .provider-name {
+            span:nth-child(1){
+              color: gray !important;
+              text-transform: uppercase;
+              font-weight: bold;
+              font-size: .8rem;
+            }
+            span:nth-child(2){  
+              color: gray !important;
+              text-transform: capitalize;
+              font-weight: bold;
+              font-size: .8rem;
+            }
+          }
+        .status{
+            span:nth-child(1){
+              color: gray!important;
+              font-weight: bold;
+              font-size: .8rem;
+              padding: .4rem;
+              border-radius: .5rem;
+            }
+            span:nth-child(2){
+              color: rgb(69, 223, 190) !important;
+              background-color: rgba(69, 223, 190, 0.266) !important;
+              font-weight: bold;
+              font-size: .8rem;
+              padding: .4rem;
+              margin: 0 .2rem;
+              border-radius: .5rem;
+            }
+            span:nth-child(3){
+              color: rgb(62, 69, 68) !important;
+              font-weight: 100;
+              font-size: 1rem;
+              padding: .3rem;
+              border-radius: .5rem;
+              box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+            }
+            span.strong{
+              color: rgba(116, 108, 24, 0.446) !important;
+            }
+          }
+          .note{
+            color: gray!important;
+            font-weight: bold;
+            font-size: .8rem;
+            padding: .4rem;
+            border-radius: .5rem;
+            display: flex;
+            justify-content: center !important;
+            align-items: center !important;
+        
+            box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 90px;
+            span{
+              font-size: 2rem;
+            }
+          }
+    }
+}

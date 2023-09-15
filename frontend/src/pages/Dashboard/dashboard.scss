@@ -1,0 +1,66 @@
+// .sidebar{
+//     background-color: rgb(215, 215, 215);
+//     height: '100vh' !important;
+// }
+
+.sidebar-dashboard{
+    background-color: transparent!important;
+    border: 0px !important;
+
+    .dashboard-title{
+        text-transform: uppercase;
+        padding:1rem;
+        color: gray;
+        font-size: 1rem;
+        text-align: center;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+        border-radius: 1.4rem;
+        
+    }
+    .dashboard-navlink{
+        padding: .8rem;
+        color: gray !important;
+        font-weight: bold;
+        margin-bottom: 1rem;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
+        border-radius: 1.4rem;
+    }
+    .dashboard-navlink:hover{
+        background-color:rgb(69, 223, 190);
+        color: white !important;
+    }
+
+}
+
+.service-dashboard{
+    .icon{
+        margin-top: 1rem;
+        span.action-service{
+            margin-right: 1rem;
+            text-align: center;
+            padding:.4rem;
+            border-radius: .6rem;
+            box-shadow: -15px -15px 15px rgba(255,255,255,0.2), 15px 15px 15px rgba(0,0,0,0.1), inset -5px -5px 5px rgba(255,255,255,0.2), inset 5px 5px 5px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all .3s ease-in;
+
+        }
+        span.action-service:hover{
+            padding: .2rem;
+            background-color: aqua;
+        }
+    }
+
+    .shadow-style{
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+        transition: all .3s ease-in;
+    }
+    .shadow-style:hover{
+        transform: scale(.9);
+    }
+
+}
+
+
+
+

@@ -1,0 +1,65 @@
+.btns-block {
+  display: flex;
+  justify-content: space-between;
+}
+.btns-block .singup-btn,
+.btns-block .login-btn {
+  border: 1px solid #1dbf73;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-family: "Inter-VariableFont_slntwght";
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.6s ease;
+  font-size: 0.8rem;
+}
+
+/* .btns-block .singup-btn:active,
+.btns-block .singup-btn:focus,
+.btns-block .login-btn:active,
+.btns-block .login-btn:focus {
+  color: #1dbf73;
+} */
+
+.btns-block .singup-btn {
+  color: #1dbf73;
+}
+
+.btns-block .login-btn {
+  color: white;
+  background: #1dbf73;
+  margin-left: 20px;
+}
+
+/* .btns-block .singup-btn:hover {
+  background: #1dbf73;
+  color: white;
+}
+
+.btns-block .login-btn:hover {
+  color: #1dbf73;
+  background: white;
+} */
+@media screen and (max-width: 935px) {
+  .title_search_block .logo-text {
+    font-size: 1rem;
+  }
+  .btns-block .singup-btn,
+  .btns-block .login-btn {
+    font-size: 0.6rem;
+  }
+}
+
+@media screen and (max-width: 875px) {
+  .btns-block .singup-btn,
+  .btns-block .login-btn {
+    font-size: 0.8rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .btns-block .singup-btn,
+  .btns-block .login-btn {
+    font-size: 0.6rem;
+  }
+}

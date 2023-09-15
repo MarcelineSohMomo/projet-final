@@ -1,0 +1,40 @@
+.window-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    padding-top: 5rem;
+
+    .window {
+        height: 90%;
+        width: 90%;
+        max-width: 90%;
+        overflow-y: scroll;
+        background-color: white !important;
+        padding: 20px;
+        z-index: 999;
+        .close-window{
+            width: 20px;
+            height: 20px;
+            color: rgb(243, 131, 131);
+            cursor: pointer;
+        }
+        .window-content {
+            /* Styles du contenu de la window */
+        }
+        .window-border{
+            border-radius: 1rem !important;
+        }
+
+    }
+}
+      
+      
+      
+      

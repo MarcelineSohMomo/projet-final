@@ -1,0 +1,25 @@
+.signin-button, socialbtn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 21px;
+    width: 100%;
+    padding: 6px;
+    margin-top: 10px;
+    background: #1DBF73;
+    border-radius: 5px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1rem;
+    line-height: 29px;
+    /* identical to box height */
+    color: #FFFFFF;
+}
+
+.socialbtn{
+    background: #fff;
+    color: #000;
+    border: 1px solid #ced4da;
+}
+

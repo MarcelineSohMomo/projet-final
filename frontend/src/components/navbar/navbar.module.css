@@ -1,0 +1,106 @@
+.navbar {
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    color: #fff;
+}
+
+.navbar-logo{
+    font-family: 'Jaldi';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 61px;
+    /* identical to box height */
+    color: #000000;
+}
+    
+.nav-links{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 0 10px 0 0;
+    width: 400px;
+
+}
+.nav-links a {    
+    color: #fff;
+}
+
+.logo {
+    font-size: 32px;
+}
+
+.menu {    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+}    
+
+    
+
+.menu li,  .menu a{    
+    padding: 5px 14px;
+    color: #000000;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 29px;
+    /* identical to box height */
+    list-style: none;
+}
+
+input[type=checkbox]{
+    display: none;
+} 
+    
+.hamburger {
+    display: none;
+    font-size: 24px;
+    user-select: none;
+}
+    
+@media (max-width: 768px) {    
+    .menu { 
+        display:none;
+        position: absolute;
+        background-color:teal;
+        right: 0;
+        left: 0;
+        text-align: center;
+        padding: 16px 0;
+    }
+    
+    .menu li:hover {
+        display: inline-block;
+        background-color:#4c9e9e;
+        transition: 0.3s ease;
+    }
+    
+    .menu li + li {
+        margin-top: 12px;
+    }
+    
+    input[type=checkbox]:checked ~ .menu{
+        display: block;    
+    }
+    
+    .hamburger {
+        display: block;
+    }
+    
+    .dropdown {
+        left: 50%;
+        top: 30px;
+        transform: translateX(35%);
+    }
+    
+    .dropdown li:hover {
+        background-color: #4c9e9e;
+    }
+    
+}

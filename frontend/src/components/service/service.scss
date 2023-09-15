@@ -1,0 +1,96 @@
+@keyframes scale {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  .loading-circle {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #007bff;
+    animation: scale 1s infinite ease-in-out;
+  }
+  
+  .loading-circle:not(:last-child) {
+    margin-right: 5px;
+  }
+  
+  .loading-circle:nth-child(2) {
+    animation-delay: 0.25s;
+  }
+  
+  .loading-circle:nth-child(3) {
+    animation-delay: 0.5s;
+  }
+  
+  .loading-circle:nth-child(4) {
+    animation-delay: 0.75s;
+  }
+/* End loading style*/
+
+
+
+  .custom-card {
+    width: 20rem;
+    background-color: #bef9da;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1) !important;
+  }
+  
+  .custom-button {
+    background-color: #37a000;
+    border: none;
+  }
+  
+  .profile-img {
+
+  }
+  
+  .no-content {
+    width: 100% !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ddd;
+    color: #666;
+  }
+  
+  .empty-profile {
+    width: 50px !important;
+    height: 50px !important;
+    border: 2px solid rgb(196, 48, 48);  
+    border-radius: 50%;
+    // display: inline-block;
+
+  }
+  .big-service-detail-card{
+    input.checkbox{
+      height: 20px !important;
+      width: 20px;
+      margin: 5px;
+      align-items: center;
+      border: 0 !important;
+      accent-color: #bef9da;
+    }
+  }
+
+  .provider-content{
+    margin: 2rem;
+    padding: 1rem 0;
+    span{
+      color: gray;
+      font-weight: bold;
+    }
+    span:nth-Child(1){
+
+    }
+  }

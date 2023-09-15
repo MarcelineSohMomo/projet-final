@@ -1,0 +1,423 @@
+.content{
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+  .name{
+    font-size: 2rem;
+    span:nth-child(1){
+      font-weight: bold;
+      color: rgb(69, 223, 190)  !important;
+      padding-inline-end: 1rem;
+    }
+    span:nth-child(2){
+      font-weight: bold;
+    }
+    .stars{
+      font-size: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  .center-name{
+    display: flex;
+  }
+  .certifications{
+    span{
+      text-transform: uppercase !important;
+      color: rgb(187, 206, 201);
+      font-size: .8rem;
+      padding: .6rem;
+    }
+    .item{
+      box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+      color: gray;
+      font-weight: bold;
+      padding: .6rem;
+      border-radius: .8rem;
+      margin-right: .5rem;
+    }
+  }
+  .no-content{
+    // height: 400px;
+  }
+  
+  .description{
+    span{
+      margin-top: 1rem;
+      color: gray !important;
+      font-weight: bold;
+      font-size: .8rem;
+    }
+    p{
+      font-weight: 100;
+      font-size: .9rem;
+    }
+  }
+  .qualification{
+    text-transform: uppercase !important;
+    color: gray !important;
+    font-weight: bold;
+    font-size: .8rem;
+    div{
+      font-weight: 100;
+      font-size: .7rem;
+      margin-bottom: 1rem;
+
+    }
+    .role{
+      text-transform: uppercase !important;
+      color: gray !important;
+      padding: .5rem;
+      font-weight: bold;
+      font-size: .8rem;
+      box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+      border-radius: .8rem;
+      width: fit-content;
+      .admin-role{
+        background-color: rgba(69, 223, 190, 0.371);
+        padding: .4rem;
+        border-radius: .6rem;
+        font-weight: bold;
+        color: white !important;
+      }
+    }
+    
+    .item{
+      padding: .5rem;
+      box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+      color: gray;
+      font-weight: bold;
+      border-radius: .8rem;
+      margin-right: .5rem;
+    }
+  }
+  .favorie{
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: .8rem;
+  }
+
+  .small-card-service{
+
+  }
+  .title-left-content{
+
+  }
+  .contacter, .date-creation{
+    margin: 1rem 0 !important;
+    padding: .8rem;
+    border-radius: .8rem;
+    color:gray;
+    font-weight: bold;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 90px;    
+  }
+
+  .notes{
+    margin: 1rem 0 !important;
+    color: white;
+    font-weight: bold;
+    padding: .8rem;
+    border-radius: .8rem;
+    background-color:rgba(248, 229, 119, 0.927) !important;
+    box-shadow: 0px 9px 30px 0px rgba(248,229,119,0.9);
+    
+  }
+
+  .mes-services, .services-favorites, .commandes{
+    margin-top: 2rem;
+    text-transform: uppercase !important;
+    color: gray !important;
+    font-weight: bold;
+    font-size: .8rem;
+  }
+
+  .provider-name{
+    
+  }
+  .provider-name {
+    span:nth-child(1){
+      color: gray !important;
+      text-transform: uppercase;
+      font-weight: bold;
+      font-size: .8rem;
+    }
+    span:nth-child(2){  
+      color: gray !important;
+      text-transform: capitalize;
+      font-weight: bold;
+      font-size: .8rem;
+    }
+  }
+
+  .status{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    span:nth-child(1){
+      color: gray!important;
+      font-weight: bold;
+      font-size: .8rem;
+      padding: .4rem;
+      border-radius: .5rem;
+    }
+    span:nth-child(2){
+      color: rgb(69, 223, 190) !important;
+      background-color: rgba(69, 223, 190, 0.266) !important;
+      font-weight: bold;
+      font-size: .8rem;
+      padding: .4rem 1rem;
+      margin: 0 .2rem;
+      border-radius: .5rem;
+    }
+    span:nth-child(3){
+      color: rgb(62, 69, 68) !important;
+      font-weight: 100;
+      font-size: 1rem;
+      padding: .3rem;
+      border-radius: .5rem;
+      box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    }
+    span.strong{
+      color: rgba(116, 108, 24, 0.446) !important;
+    }
+  }
+  .note{
+    color: gray!important;
+    font-weight: bold;
+    font-size: .8rem;
+    padding: .4rem;
+    border-radius: .5rem;
+    display: flex;
+    justify-content: center !important;
+    align-items: center !important;
+
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 90px;
+    span{
+      font-size: 2rem;
+    }
+  }
+
+  h4{
+    margin: 1rem 0;
+    color: rgb(62, 69, 68) !important;
+    font-weight: bold;
+  }
+
+  .commentaire{
+    font-size: .8rem;
+  }
+
+  .user-profil-card{
+    border: 0px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+    .user-name{
+      span:nth-child(1){
+        color: gray!important;
+        font-weight: bold;
+        font-size: 1rem;
+        padding: .4rem;
+        border-radius: .5rem;
+      }
+      span:nth-child(2){
+        color: gray!important;
+        font-size: 1rem;
+        padding: .4rem;
+        border-radius: .5rem;
+      }
+    }
+    .user-email{
+      color: rgb(69, 223, 190) !important;
+      font-size: .8rem;
+      text-align: center;
+      box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+    }
+  }
+
+  .small-comment-card{
+    .commentaire{
+      padding: 1rem;
+      padding-bottom: .5rem;
+      box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+      border-radius: .4rem;
+      .date{
+        margin: 0px;
+        text-align: end;
+        color: rgb(169, 160, 160);
+      }
+
+
+    }
+    .hours{
+      display: flex;
+      justify-content: space-between;
+    }
+    .icon{
+      display: flex;
+      justify-content: end;
+      color: rgba(128, 128, 128, 0.732);
+      margin-top: .3rem;
+    }
+
+    .delete-icon, .edit-icon, .save-icon{
+      cursor: pointer !important;
+      margin: 0 .5rem;
+      transition: all .2s ease-in;
+    }
+    .delete-icon:hover, .edit-icon:hover, .save-icon:hover{
+      padding: .1rem;
+      color: black;
+    }
+    .delete-icon{
+
+    }
+    .edit-icon{
+      margin: 0 .2rem !important;
+    }
+  }
+  .categorie{
+    margin-top: .8rem;
+    span:nth-child(1){
+      color: gray!important;
+      font-weight: bold;
+      font-size: 1rem;
+      padding: .4rem;
+      border-radius: .5rem;
+    }
+    span:nth-child(2){
+      padding: .8rem;
+      border-radius: .5rem;
+      background-color: rgba(69, 223, 190, 0.162);
+      color: rgb(69, 223, 190);
+      font-weight: bold;
+      box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 90px;
+    }
+  }
+
+  .contacter-fournisseur{
+    color: rgba(35, 117, 99, 0.848);
+    background-color:  white;
+    // background-color:  rgba(169, 206, 202, 0.141);
+    margin: 2rem 0 !important;
+    padding: .8rem;
+    font-weight: 300;
+    border-radius: .8rem;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+    transition: all .2s ease-in;
+  }
+  .contacter-fournisseur:hover{
+    color: rgb(69, 223, 190);
+    background-color:  rgba(69, 223, 190, 0.293);
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .laisser-commentaire{
+    // background-color:  rgba(221, 223, 69, 0.293);
+    background-color:  rgb(255, 255, 255);
+    margin: 2rem 0 !important;
+    font-weight: 300;
+    padding: .8rem;
+    border-radius: .8rem;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+    transition: all .2s ease-in;
+  }
+  .laisser-commentaire:hover{
+    background-color:  rgba(221, 223, 69, 0.607);
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .description-service{
+    margin-top: 2rem;
+    font-size: .9rem;
+    padding: .4rem;
+    color: gray;
+    font-weight: 200;
+  }
+  .formule-card{
+    span{
+      font-weight: bold;
+      color: gray;
+      padding:  .1rem;
+    }
+    .tarification{
+      .offre{
+        margin: .6rem;
+        border-radius: .4rem;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+        padding: .6rem;
+        width: fit-content;
+        .formule{
+          text-transform: uppercase;
+          padding: .4rem !important;
+          color: rgb(134, 128, 65);
+          font-size: .8rem;
+        }
+        .prix{
+          color: gray;
+          padding: .4rem;
+          border-radius: .4rem;
+          font-weight: bold;
+          box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+        }
+      }
+    }
+  }
+  .faire-commande{
+    background-color:  rgb(255, 255, 255);
+    margin: 1rem 0 !important;
+    font-weight: 300;
+    padding: .8rem;
+    border-radius: .8rem;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+    transition: all .2s ease-in;
+  }
+  .faire-commande:hover{
+    background-color:  rgba(221, 223, 69, 0.607);
+  }
+  .subtitle-service{
+    color: gray !important;
+    font-size: 1rem !important;
+    text-transform: uppercase;
+  }
+
+  .subtitle.comments{
+    color: gray !important;
+    font-weight: bold;
+    font-size: 1rem;
+    text-transform: uppercase;
+  }
+  .comment-form{
+    margin: 1rem;
+    display: flex;
+    textarea:focus, input:focus{
+      outline: none;
+    }
+    textarea{
+      border-radius: .4rem;
+      box-shadow: 0 20px 10px -20px rgba(0,0,0,0.45) inset, 0 -20px 10px -20px rgba(0,0,0,0.45) inset, 20px 0 10px -20px rgba(0,0,0,0.45) inset;
+      border: 0;
+    }
+    button{
+      margin: 0 1rem;
+      border-radius: .4rem;
+      border: 0;
+      box-shadow: rgba(0, 0, 0, 0.2) 0px 20px 30px;
+    }
+    button:hover{
+      box-shadow: rgba(0, 0, 0, 0.187) 0px 5px 30px 2px;
+    }
+  }
+  .editing-comment{
+    background-color: transparent;
+    border: 0;
+  }
+  .editing-comment:focus{
+    outline: none;
+  }
+
+
+}
+
+.box-shadow-service{
+  border-radius: .8rem;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 60px 40px -7px;
+}

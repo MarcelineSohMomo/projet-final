@@ -1,0 +1,60 @@
+.content{
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+}
+.window-border{
+    border-radius: 1rem;
+}
+.subtitle-service{
+    color: gray !important;
+    font-size: 1rem !important;
+    text-transform: uppercase;
+}
+.subtitle-service.name-service{
+  padding: .4rem;
+  margin-left: .8rem;
+  color: rgb(69, 223, 190) !important;
+  width: fit-content;
+  font-weight: bold;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+.add-comment{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      .comment-form{
+        padding-top: 3rem;
+        margin: 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        textarea:focus, input:focus{
+          outline: none;
+        }
+        textarea{
+          border-radius: .4rem;
+          box-shadow: 0 20px 10px -20px rgba(0,0,0,0.45) inset, 0 -20px 10px -20px rgba(0,0,0,0.45) inset, 20px 0 10px -20px rgba(0,0,0,0.45) inset;
+          border: 0;
+          width: 50%;
+        }
+        button{
+          margin: 0 1rem;
+          border-radius: .4rem;
+          border: 0;
+          box-shadow: rgba(0, 0, 0, 0.2) 0px 20px 30px;
+        }
+        button:hover{
+            color: black;
+            padding: .3rem;
+          box-shadow: rgba(0, 0, 0, 0.187) 0px 5px 30px 2px;
+        }
+      }
+      .editing-comment{
+        background-color: transparent;
+        border: 0;
+      }
+      .editing-comment:focus{
+        outline: none;
+      }
+    
+}
