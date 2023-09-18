@@ -17,6 +17,7 @@ routes.put("/:id", verifyToken, service.updateService_);
 routes.put("/copy-to/:id", verifyToken, service.copyServiceTo_);
 
 routes.delete("/:id", verifyToken, service.deleteService_);
+routes.delete("allservice/:id", verifyToken, service.deleteAllUserService_);
 routes.post("/upload/:id", verifyToken, upload.array("files"), service.updateServiceImgs_);
 
 

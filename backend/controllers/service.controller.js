@@ -211,6 +211,25 @@ module.exports.deleteService = async(req, res) => {
     }
 }
 
+module.exports.deleteAllUserService = async(req, res) => {
+    if (!req || !req.params.id)
+        return res.status(505).json({ message: "Des paramètres importante sont manquantes" });
+
+    try {
+        const deletedService = await Service.updateMany({providerId: req.params.id},{isDeleted:true},{ new: false, useFindAndModify: false});
+        if (!deletedService)
+            return res.status(404).json({ message: "Les services à supprimer sont introuvables" });
+        const user = await User.findByIdAndUpdate({_id:req.params.id},{listservices:[]},{ new: true, useFindAndModify: false});
+        if (!user)
+            return res.status(404).json({ message: "Le prestataire du service est introuvable" });
+
+        return res.status(200).json({ message: "Services supprimées  avec success !" });
+    } catch (error) {
+        console.log(error)
+        return res.status(505).json({ message: "Une erreur s'est produite.", error: `${error}` });
+    }
+}
+
 module.exports.copyServiceTo = async(req, res) => {
     try {
         const currentUser = await User.findById(req.userId);
