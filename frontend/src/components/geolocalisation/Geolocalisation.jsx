@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
-function GeolocationComponent({getGeolocalisation}) {
+function GeolocationComponent({ getGeolocalisation }) {
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
   const [error, setError] = useState(null);
@@ -9,10 +9,7 @@ function GeolocationComponent({getGeolocalisation}) {
 
   useEffect(() => {
     if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        handleSuccess,
-        handleError
-      );
+      navigator.geolocation.getCurrentPosition(handleSuccess, handleError);
     } else {
       setError("Geolocation is not supported by your browser.");
     }
@@ -43,10 +40,9 @@ function GeolocationComponent({getGeolocalisation}) {
       if (countryData) {
         setCountry(countryData.country);
         getGeolocalisation({
-          longitude: longitude,
-          latitude: latitude,
-          country: countryData.country
-        })
+          lat: latitude,
+          lng: longitude,
+        });
       }
     } catch (err) {
       setError(`Error fetching country data: ${err.message}`);
@@ -55,9 +51,11 @@ function GeolocationComponent({getGeolocalisation}) {
 
   return (
     <div>
-      <h2 >Geolocalisation</h2>
+      <h2>Geolocalisation</h2>
       {latitude && longitude && (
-        <p>Latitude: {latitude}, Longitude: {longitude}</p>
+        <p>
+          Latitude: {latitude}, Longitude: {longitude}
+        </p>
       )}
       {country && <p>Country: {country}</p>}
       {error && <p>{error}</p>}
