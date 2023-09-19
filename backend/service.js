@@ -2,7 +2,7 @@ const { signUpUser, signin, signUpArtisan, signUpModerator } = require("./contro
 const { addRoleForUser, deleteRole, getRoles, findRole, updateRole, xxxxxxxxxx } = require("./controllers/role.controller");
 const { like, favorite } = require("./controllers/favorite.controller");
 const { updateUser, deleteUser, findUser, getUsers, getAdminInfo, getUsersWithoutCustomer, updateAvailability, getUsersAndNotification } = require("./controllers/user.controller");
-const { createService, readService, readServices, updateService, deleteService, deleteAllUserService, readServiceByProviderId, findFavoriteService, copyServiceTo } = require("./controllers/service.controller");
+const { createService, readService, readServices, searchServices, updateService, deleteService, deleteAllUserService, readServiceByProviderId, findFavoriteService, copyServiceTo } = require("./controllers/service.controller");
 const { note, readNotes, readServiceNotes, deleteNote, readUserNotes } = require("./controllers/note.controller");
 const { readComment, readComments, createComment, deleteComment, updateComment, readCommentsByTabIds, getPrivateComments } = require("./controllers/comment.controller");
 const { uploadImg } = require("./controllers/upload.controller");
@@ -105,6 +105,10 @@ class Service{
 
     async readServices_(req, res){
         return await readServices(req, res);
+    }
+    
+    async searchServices_(req, res){
+        return await searchServices(req, res);
     }
 
     async updateServiceImgs_(req, res){

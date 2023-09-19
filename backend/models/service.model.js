@@ -17,7 +17,7 @@ const Service = new schema({
     listnotes: [{ type: mongoose.Schema.Types.ObjectId, ref: "note" }],
     listcommandes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'commande' }],
     listcomments: [{ type: mongoose.Schema.Types.ObjectId, ref: "comment" }],
-    keywords: [{ type : String }],
+    keywords: { type : String },
     isDeleted: { 
         type: Boolean,
         default: false

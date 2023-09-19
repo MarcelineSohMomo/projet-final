@@ -9,6 +9,7 @@ const service = new Service();
 
 routes.post("/", verifyToken, service.createService_);
 routes.get("/", verifyToken, service.readServices_);
+routes.get("/search", verifyToken, service.searchServices_);
 
 routes.get("/favorite/:id", verifyToken, service.readFavoriteService_);
 routes.get("/:id", verifyToken, service.readService_);
