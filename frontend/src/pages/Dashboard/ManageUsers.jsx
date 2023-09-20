@@ -85,10 +85,10 @@ const ManageUsers = () => {
             id: userToEdit._id,
           },
         });
-        console.log(res);
 
         setEditDialogOpen(false);
         getUsers();
+        setShowDeleteService(false);
         setServerMessage({ message: res.data.message, type: "success" });
         setServerMessageKey((prev) => prev + 1);
       }
@@ -119,6 +119,8 @@ const ManageUsers = () => {
         },
       });
 
+      setShowDeleteService(false);
+      handleEdit();
       setServerMessage({ message: res.data.message, type: "success" });
       setServerMessageKey((prev) => prev + 1);
     } catch (error) {
