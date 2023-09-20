@@ -1,4 +1,4 @@
-const { ROLES, roleToNumber, User, Service } = require("../models");
+const { ROLES, roleToNumber, User, Service, Role } = require("../models");
 const { getRoleForVerification } = require("./role.controller");
 require('dotenv').config({ path: "../config/.env"});
 const jwt = require("jsonwebtoken");
@@ -105,7 +105,7 @@ module.exports.canDelServices = async (req) => {
         return resolve(true);
 
       const user =  await User.findById(id).populate("roles", "value");
-      const providerRole = await ROLES.findOne({name:'provider'});
+      const providerRole = await Role.findOne({name:'provider'});
       const isHigherThanProvider = user.roles.find((u)=>{
         return u.value > providerRole.value
       })
