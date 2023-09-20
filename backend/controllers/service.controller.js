@@ -222,7 +222,7 @@ module.exports.deleteAllUserService = async(req, res) => {
         const deletedService = await Service.updateMany({providerId: req.params.id},{isDeleted:true},{ new: false, useFindAndModify: false});
         if (deletedService.modifiedCount == 0)
             return res.status(404).json({ message: "Les services à supprimer sont introuvables" });
-        const user = await User.findByIdAndUpdate({_id:req.params.id},{listservices:[]},{ new: true, useFindAndModify: false});
+        const user = await User.findByIdAndUpdate({_id:req.params.id},{$set:{listservices:[]}},{ new: true, useFindAndModify: false});
         if (!user)
             return res.status(404).json({ message: "Le prestataire du service est introuvable" });
 
