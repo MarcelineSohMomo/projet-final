@@ -197,6 +197,7 @@ const ManageUsers = () => {
                 <span
                   className="edit-icon "
                   onClick={() => {
+                    delete user.listservices;
                     setUserToEdit(user);
                     setEditDialogOpen(true);
                   }}
