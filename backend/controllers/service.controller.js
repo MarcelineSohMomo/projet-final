@@ -266,7 +266,6 @@ module.exports.copyServiceTo = async(req, res) => {
 
         // if(receiver.listservices.includes(service._id.toString()))
         //     return res.status(200).json({ message: "L'utilisateur a deja ce service!",});
-        // if (!receiver.listservices.includes(service._id.toString())) {
         receiver.listservices.push(savedService._id);
         // }
         if (receiver.roles.includes(roleCustomer._id)) {
