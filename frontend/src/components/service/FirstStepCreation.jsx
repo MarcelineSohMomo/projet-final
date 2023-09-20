@@ -96,8 +96,8 @@ const FirstStepCreation = ({ getInfostepOne }) => {
               return (
                 <div key={index} className="d-flex mt-2">
                   <p>{atag}</p>
-                  <Button
-                    className="mx-2 btn-danger btn-sm"
+                  <button
+                    className="mx-2 es-button es-button-delete"
                     onClick={() => {
                       const newTags = tags.filter((tag) => tag !== atag);
                       setTags(newTags);
@@ -112,7 +112,7 @@ const FirstStepCreation = ({ getInfostepOne }) => {
                     }}
                   >
                     Supprimer
-                  </Button>
+                  </button>
                 </div>
               );
             })}
@@ -125,8 +125,10 @@ const FirstStepCreation = ({ getInfostepOne }) => {
             placeholder="Ajouter un mot clé"
             className="es-inputs"
           />
-          <Button
-            style={{ marginLeft: 8, height: "80%" }}
+          <button
+            variant="secondary"
+            className="ml-2 mx-3 es-button"
+            style={{ marginLeft: 8, height: "80%", opacity: 1 }}
             onClick={() => {
               setTags([...tags, tag]);
               setTag("");
@@ -139,10 +141,10 @@ const FirstStepCreation = ({ getInfostepOne }) => {
                 keywords: [...tags, tag].toString(),
               });
             }}
-            disabled={tag ? false : true}
+            disabled={tag.trim() ? false : true}
           >
             Ajouter
-          </Button>
+          </button>
         </div>
       </Form.Group>
       {/* <Col><Button className=' my-2' variant="success" onClick={handleSubmit}>
