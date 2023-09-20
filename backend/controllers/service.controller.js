@@ -220,7 +220,7 @@ module.exports.deleteAllUserService = async(req, res) => {
 
     try {
         const deletedService = await Service.updateMany({providerId: req.params.id},{isDeleted:true},{ new: false, useFindAndModify: false});
-        if (!deletedService)
+        if (deletedService.modifiedCount == 0)
             return res.status(404).json({ message: "Les services à supprimer sont introuvables" });
         const user = await User.findByIdAndUpdate({_id:req.params.id},{listservices:[]},{ new: true, useFindAndModify: false});
         if (!user)
@@ -298,7 +298,7 @@ module.exports.searchServices = async(req, res) => {
         const nearService = services.filter((s)=>{
             if(!s.geolocalisation)//Si les donnees de la localisation n'existe pas,
                 return true
-            const distance = haversine(s.geolocalisation, {lat:req.query.lat, lng:req.query.lng});
+            const distance = haversine(s.geolocalisation, {lat:parseFloat(req.query.lat), lng:parseFloat(req.query.lng)});
             return (distance <= MAX_DISTANCE )? true: false
         });
 
