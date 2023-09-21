@@ -41,28 +41,34 @@ const AdminCharts = ({ user, data }) => {
     },
     scales: {
       y: {
-        // type: "linear",
         display: true,
         position: "left",
         min: 0,
         max: 5,
+        ticks: {
+          stepSize: 1,
+        },
       },
       y1: {
-        // type: "linear",
         display: true,
         position: "right",
         min: 0,
         grid: {
           drawOnChartArea: false,
         },
+        ticks: {
+          stepSize: 5,
+        },
       },
       y2: {
-        //   type: "linear",
         display: false,
         position: "right",
         min: 0,
         grid: {
           drawOnChartArea: false,
+        },
+        ticks: {
+          stepSize: 5,
         },
       },
     },
@@ -102,6 +108,7 @@ const AdminCharts = ({ user, data }) => {
     <div
       style={{
         width: "50%",
+        height: "50vh",
         margin: "0 auto",
       }}
     >
