@@ -1,4 +1,6 @@
 const { Service, User, Categorie, Comment, Note, Role } = require("../models");
+const haversine = require("haversine-distance");
+const MAX_DISTANCE = 1000_000 // en metre
 
 
 const variablesIsEmpty = (req, res) => {
@@ -31,6 +33,7 @@ module.exports.createService = async(req, res) => {
             tarification: req.body.tarification,
             providerId: req.body.providerId,
             others: req.body.others,
+            keywords: req.body.keywords,
             geolocalisation: req.body.geolocalisation,
         });
         const categorie = await Categorie.findById(req.body.categorie);
@@ -211,6 +214,25 @@ module.exports.deleteService = async(req, res) => {
     }
 }
 
+module.exports.deleteAllUserService = async(req, res) => {
+    if (!req || !req.params.id)
+        return res.status(505).json({ message: "Des paramètres importante sont manquantes" });
+
+    try {
+        const deletedService = await Service.updateMany({providerId: req.params.id},{isDeleted:true},{ new: false, useFindAndModify: false});
+        if (deletedService.modifiedCount == 0)
+            return res.status(404).json({ message: "Les services à supprimer sont introuvables" });
+        const user = await User.findByIdAndUpdate({_id:req.params.id},{$set:{listservices:[]}},{ new: true, useFindAndModify: false});
+        if (!user)
+            return res.status(404).json({ message: "Le prestataire du service est introuvable" });
+
+        return res.status(200).json({ message: "Services supprimées  avec success !" });
+    } catch (error) {
+        console.log(error)
+        return res.status(505).json({ message: "Une erreur s'est produite.", error: `${error}` });
+    }
+}
+
 module.exports.copyServiceTo = async(req, res) => {
     try {
         const currentUser = await User.findById(req.userId);
@@ -244,7 +266,6 @@ module.exports.copyServiceTo = async(req, res) => {
 
         // if(receiver.listservices.includes(service._id.toString()))
         //     return res.status(200).json({ message: "L'utilisateur a deja ce service!",});
-        // if (!receiver.listservices.includes(service._id.toString())) {
         receiver.listservices.push(savedService._id);
         // }
         if (receiver.roles.includes(roleCustomer._id)) {
@@ -256,4 +277,70 @@ module.exports.copyServiceTo = async(req, res) => {
         console.log(error);
         return res.status(400).json({ message: "La copie a échoué!", error: `${error}` });
     }
+}
+
+module.exports.searchServices = async(req, res) => {
+    try {
+        const query = {
+            $or: [
+               { name:{$regex :req.query.key, $options: 'i'}},
+               { keywords:{$regex :req.query.key, $options: 'i'}},
+            ]
+        }
+        const services = await Service.find(query)
+            .populate("providerId")
+            .populate("categorie")
+        if(services.length == 0)
+            return res.status(404).json({ message: "Aucun service trouvé!" });
+
+        //Filtrer la liste des services en fonction de la distance entre le service le rechercheur
+        const nearService = services.filter((s)=>{
+            if(!s.geolocalisation)//Si les donnees de la localisation n'existe pas,
+                return true
+            const distance = haversine(s.geolocalisation, {lat:parseFloat(req.query.lat), lng:parseFloat(req.query.lng)});
+            return (distance <= MAX_DISTANCE )? true: false
+        });
+
+        if(nearService.length == 0)
+            return res.status(404).json({ message: "Le service souhaité ne se trouve pas dans votre circonférance" });
+        
+        return res.status(200).send(nearService);
+    } catch (err) {
+        return res.status(505).json({ message: "An error has occured", error: `${err}` });
+    }
+
+}
+
+module.exports.userServiceStats = async(req, res) => {
+    try {
+        const services = await Service.find({providerId:req.params.id})
+            .populate("listnotes","value")
+
+        if(services.length == 0)
+            return res.status(404).json({ message: "Aucun service trouvé!" });
+
+        const servStat = services.map((serv)=>{
+
+            const totalNote = serv.listnotes.reduce((total, note)=>{
+                return total + note.value;
+            },0);
+
+            const avgNote = totalNote/serv.listnotes.length;
+
+            return {
+                _id: serv._id,
+                name: serv.name,
+                noCommandes: serv.listcommandes.length,
+                noLikes: serv.likers.length,
+                avgRating: avgNote,
+            };
+
+        })
+
+        return res.status(200).send(servStat);
+    } catch (err) {
+        console.log(err)
+        return res.status(505).json({ message: "An error has occured", error: `${err}` });
+    }
+
 }

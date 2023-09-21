@@ -4,110 +4,117 @@ import api from "../../api";
 import ServerMessage from "../../components/serverMessage/ServerMessage";
 import { Row, Col, Carousel } from "react-bootstrap";
 import Loading from "../../components/loading/Loading";
-import { useTable } from 'react-table';
+import { useTable } from "react-table";
 import { getToken, getUser } from "../../util";
-import SmallServicesCard from "../../components/profil/SmallServicesCard";
-import Window from "../../components/window/Window";
-import BigServiceDetailCardForDashoard from "../../components/service/BigServiceDetailCardForDashoard";
-import ChartStatistics from "../../components/chartJS/ChartStatistics";
+import AdminCharts from "../../components/chartJS/AdminCharts";
 
 const Statistics = () => {
-  const [services, setServices] = useState([]);
-  const [serverMessage, setServerMessage] = useState(null);
-  const [serverMessageKey, setServerMessageKey] = useState(0);
-  const isconnected =  localStorage.getItem("isconnected");
-  const token =getToken();
+  const [error, setError] = useState();
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [auser, setAuser] = useState();
+  const [stats, setStats] = useState();
+  const token = getToken();
   const userID = getUser()._id;
-  const [commandsGroupByStatus, setCommandsGroupByStatus] = useState([]);
 
-  const fetchServices = async () => {
-    if (!isconnected) return Navigate("/signin");
+  const getUsers = async () => {
+    setLoading(true);
     try {
-      const res = await api.servicesByProvider({
+      const res = await api.getUsers({
         headers: {
           Authorization: `Bearer ${token}`,
           id: userID,
         },
       });
-      console.log(res);
-      setServices(res.data);
-      setServerMessageKey((prevKey) => prevKey + 1);
-      return res.data
+      const usersWithRole = res.data.map((user) => ({
+        ...user,
+        role: user.roles[0].name,
+      }));
+      setUsers(usersWithRole);
     } catch (error) {
-      setServerMessageKey((prevKey) => prevKey + 1);
-      const resolvedError = await error.response;
-      setServerMessage({
-        message: resolvedError?.data?.message,
-        type: "error",
-      });
-      console.log(
-        "Une erreur s'est produite lors de la récupération des services ",
-        error
-      );
+      error.response
+        ? setError(error.response.data.message)
+        : setError("Une erreur s'est produite!");
+    } finally {
+      setLoading(false);
     }
   };
 
-  const groupCommandsByStatus = async () => {
+  const getStatistics = async (id) => {
+    setLoading(true);
     try {
-      const res = await api.groupCommandsByStatus({
+      const res = await api.getStats({
         headers: {
           Authorization: `Bearer ${token}`,
-          id: userID,
+          id,
         },
       });
-
-      console.log("group data  ", res.data)
-      setCommandsGroupByStatus(res.data);
+      setStats(res.data);
     } catch (error) {
-      console.log(
-        "Une erreur s'est produite lors de la récupération des commandes complétées ",
-        error
-      );
+      error.response
+        ? setError(error.response.data.message)
+        : setError("Une erreur s'est produite!");
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    const gets = async () => {
-      const services = await fetchServices();
-      groupCommandsByStatus();
-
-    }
-    gets();
-  }, [isconnected]);
+    getUsers();
+  }, []);
 
   return (
-    <div className="service-dashboard" style={{height:"90vh", overflowY:"scroll"}}>
-      {serverMessage && (
-        <ServerMessage
-          message={serverMessage.message}
-          type={serverMessage.type}
-          key={serverMessageKey}
-        />
-      )}
-      {services.length !== 0 ? (
-        <>
-          
-            {services.map((service, key) => (
-              !service.isDeleted && <Row className=" mb-4">
-                <Col  md={3} key={service._id} className=" mt-5 mb-5 over-service">
-                    <SmallServicesCard shadow={"shadow-style"} key={key} height={"200px"} width={"200px"} service={service} />
-                  <div className='icon'>
-                    {/* <span className='action-service'> <FaEdit /> </span> */}
-                    {/* <span className='action-service'> <FaTrash /> </span> */}
-                    <Window> <BigServiceDetailCardForDashoard service={service} width={"200px"} height={"200px"} /> </Window>
-                  </div>
-
-                </Col>
-                <Col md={8} >
-                  <ChartStatistics  commandsByService={commandsGroupByStatus[service._id]}/>
-                </Col>
-              </Row>
+    <div
+      className="service-dashboard"
+      style={{ height: "90vh", overflowY: "scroll" }}
+    >
+      {error && <p className="text-danger">{error}</p>}
+      {/* get all users who are not customers on click of user, hit endpoint to get chart data and display charts for that user's services */}
+      <table className="table">
+        <thead>
+          <tr className="title">
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {users
+            .filter((user) => user.role !== "customer")
+            .map((user) => (
+              <tr key={user._id}>
+                <td className="text-table">{user.firstname}</td>
+                <td className="text-table">{user.lastname}</td>
+                <td className="text-table">{user.phone}</td>
+                <td className="text-table">{user.email}</td>
+                <td className="text-table">{user.role}</td>
+                <td className="">
+                  <button
+                    onClick={() => {
+                      getStatistics(user._id);
+                      setAuser(user);
+                      const element = document.getElementById("graphs");
+                      if (element) {
+                        // 👇 Will scroll smoothly to the top of the next section
+                        element.scrollIntoView({ behavior: "smooth" });
+                      }
+                    }}
+                    className="btn btn-secondary"
+                  >
+                    Statistiques
+                  </button>
+                </td>
+              </tr>
             ))}
-          
-        </>
-      ) : (
-        <Loading />
-      )}
+        </tbody>
+      </table>
+      <div id="graphs" className="mt-4">
+        {stats && <AdminCharts data={stats} user={auser} />}
+      </div>
+      {loading && <Loading />}
     </div>
   );
 };

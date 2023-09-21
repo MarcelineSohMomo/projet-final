@@ -30,6 +30,11 @@ const getUsersAndNotification = (header) =>
 const createService = (payload, headers) =>
   api.post("/service", payload, headers);
 const services = (payload) => api.get("/service", payload);
+const searchServices = (headers) =>
+  api.get(
+    `/service/search?key=${headers.headers.query}&lat=${headers.headers.lat}&lng=${headers.headers.lng}`,
+    headers
+  );
 const getService = (headers) =>
   api.get(`/service/${headers.headers.id}`, headers);
 const getServices = (headers) => api.get(`/service/`, headers);
@@ -119,6 +124,9 @@ const updateHistorique = (headers) =>
 const deleteHistorique = (headers) =>
   api.delete(`/historique/${headers.headers.id}`, headers);
 
+const getStats = (headers) =>
+  api.get(`/service/stats/${headers.headers.id}`, headers);
+
 export default {
   signupArtisan,
   signupModerator,
@@ -126,6 +134,7 @@ export default {
   signin,
   signout,
   createService,
+  searchServices,
   getService,
   getServices,
   updateService,
@@ -177,4 +186,5 @@ export default {
   updateHistorique,
   deleteHistorique,
   copyServiceTo,
+  getStats,
 };

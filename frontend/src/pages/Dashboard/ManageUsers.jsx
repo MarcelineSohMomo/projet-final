@@ -85,15 +85,16 @@ const ManageUsers = () => {
             id: userToEdit._id,
           },
         });
+
         setEditDialogOpen(false);
         getUsers();
+        setShowDeleteService(false);
         setServerMessage({ message: res.data.message, type: "success" });
         setServerMessageKey((prev) => prev + 1);
       }
     } catch (error) {
       // if user is not a customer and the user has a service, prompt the user to delete the role's service(s) before changing the user's role.
-      if (error.response) {
-        console.log(error.response);
+      if (error.response.status === 405) {
         setShowDeleteService(true);
       } else {
         const resolvedError = error.response;
@@ -111,26 +112,27 @@ const ManageUsers = () => {
     setLoading(true);
 
     try {
-      await api
-        .deleteAllServices({
-          headers: {
-            Authorization: `Bearer ${getToken()}`,
-            id: userToEdit._id,
-          },
-        })
-        .then((res) => {
-          console.log(res);
-          setServerMessage({ message: res.data.message, type: "success" });
-          setServerMessageKey((prev) => prev + 1);
-        });
-    } catch (error) {
-      console.log(error);
-      const resolvedError = await error.response;
-      setServerMessage({
-        message: resolvedError?.data?.message,
-        type: "error",
+      const res = await api.deleteAllServices({
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+          id: userToEdit._id,
+        },
       });
-      // console.log("Une erreur s'est produite lors de la suppression du service ", error);
+
+      setShowDeleteService(false);
+      handleEdit();
+      setServerMessage({ message: res.data.message, type: "success" });
+      setServerMessageKey((prev) => prev + 1);
+    } catch (error) {
+      error.response?.data?.message
+        ? setServerMessage({
+            message: error?.response?.data?.message,
+            type: "error",
+          })
+        : console.log(
+            "Une erreur s'est produite lors de la suppression du service ",
+            error
+          );
     } finally {
       setLoading(false);
     }
@@ -151,13 +153,13 @@ const ManageUsers = () => {
       )}
       {showDeleteService && (
         <div className="alert alert-danger mt-3" role="alert">
-          You cannot change this user's role until you delete his services. Are
-          you sure you want to proceed?
+          Vous ne pouvez pas modifier le rôle de cet utilisateur tant que vous
+          n'avez pas supprimé ses services. Êtes-vous sur de vouloir continuer?
           <div>
             <Button onClick={() => setShowDeleteService(false)} color="primary">
               Annuler
             </Button>
-            <Button onClick={() => deleteServices()} color="primary">
+            <Button onClick={() => deleteServices()} color="error">
               Continuer
             </Button>
           </div>
@@ -195,6 +197,7 @@ const ManageUsers = () => {
                 <span
                   className="edit-icon "
                   onClick={() => {
+                    delete user.listservices;
                     setUserToEdit(user);
                     setEditDialogOpen(true);
                   }}

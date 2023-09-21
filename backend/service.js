@@ -2,12 +2,12 @@ const { signUpUser, signin, signUpArtisan, signUpModerator } = require("./contro
 const { addRoleForUser, deleteRole, getRoles, findRole, updateRole, xxxxxxxxxx } = require("./controllers/role.controller");
 const { like, favorite } = require("./controllers/favorite.controller");
 const { updateUser, deleteUser, findUser, getUsers, getAdminInfo, getUsersWithoutCustomer, updateAvailability, getUsersAndNotification } = require("./controllers/user.controller");
-const { createService, readService, readServices, updateService, deleteService, readServiceByProviderId, findFavoriteService, copyServiceTo } = require("./controllers/service.controller");
+const { createService, readService, readServices, searchServices, updateService, deleteService, deleteAllUserService, userServiceStats, readServiceByProviderId, findFavoriteService, copyServiceTo } = require("./controllers/service.controller");
 const { note, readNotes, readServiceNotes, deleteNote, readUserNotes } = require("./controllers/note.controller");
 const { readComment, readComments, createComment, deleteComment, updateComment, readCommentsByTabIds, getPrivateComments } = require("./controllers/comment.controller");
 const { uploadImg } = require("./controllers/upload.controller");
 const { updateServiceImgs } = require("./controllers/updateServiceImgs.controller");
-const { hasRight, hasEnoughRight } = require("./controllers/verifyAccess.controller");
+const { hasRight, hasEnoughRight, canDelServices } = require("./controllers/verifyAccess.controller");
 const { getAllCategories, deleteCategorieById, updateCategorieById, createCategorie } = require("./controllers/categorie.controller");
 const { getCommandes, getCommande, updateCommande, deleteCommande, getCommandeByUserId, createCommande, groupCommandsByStatus, getCommandeByProvider } = require("./controllers/commande.controller");
 const { createHistorique, getHistorique, updateHistorique, deleteHistorique } = require("./controllers/historique.controller");
@@ -106,6 +106,10 @@ class Service{
     async readServices_(req, res){
         return await readServices(req, res);
     }
+    
+    async searchServices_(req, res){
+        return await searchServices(req, res);
+    }
 
     async updateServiceImgs_(req, res){
         return await updateServiceImgs(req, res);
@@ -123,6 +127,18 @@ class Service{
         console.log("test delete", test);
         if(test)
             return await deleteService(req, res);
+    }
+    
+    async deleteAllUserService_(req, res){
+        const test = await canDelServices(req)
+        if(test)
+            return await deleteAllUserService(req, res);
+    }
+    
+    async userServiceStats_(req, res){
+        const test = await hasRight(req,2)
+        if(test)
+            return await userServiceStats(req, res);
     }
 
     async noteService(req, res){

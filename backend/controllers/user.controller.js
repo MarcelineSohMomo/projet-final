@@ -210,12 +210,17 @@ module.exports.updateUser = async(req, res) => {
                 req.params.id,
                 req.body, { new: true }
             );
+
             const role_ = await Role.findOne({ name: reqBodyRole });
+            console.log(role_);
             const role_admin = await Role.findOne({ name: "admin" });
             const existingAdmins = await User.find({ roles: role_admin._id });
             if (role_) {
                 if (user.roles.includes(role_admin._id) && (existingAdmins.length == 1)) // je vérifie si parmis mes users il n'a qu'un seul admin
                     return res.status(200).json({ message: "Mise à jour réussie. Rôle de l'administrateur reste inchangé." });
+
+                if(role_.name === "customer" && user.listservices.length>= 1)   
+                    return res.status(405).json({ message: "Supprimer les services de cet utilisateur avant de proceder" });
 
                 if (!user.roles.includes(role_._id)) {
                     user.roles = [role_._id];

@@ -1,4 +1,4 @@
-const { ROLES, roleToNumber, User, Service } = require("../models");
+const { ROLES, roleToNumber, User, Service, Role } = require("../models");
 const { getRoleForVerification } = require("./role.controller");
 require('dotenv').config({ path: "../config/.env"});
 const jwt = require("jsonwebtoken");
@@ -23,7 +23,7 @@ module.exports.hasRight = async (req,num) => {
   if(!token)
       return res.status(403).send({ message: "Token non fourni !" });
 
-  const ans = await new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     jwt.verify(token, process.env.SECRET_CODE, async(err, decoded) =>{
       if (err) {
           return reject(new Error("Unauthorized!"));
@@ -41,8 +41,7 @@ module.exports.hasRight = async (req,num) => {
       resolve(false);
     })
   })
-
-  return ans
+  
 };
 
   
@@ -56,7 +55,7 @@ module.exports.hasEnoughRight = async (req) => {
   if(!token)
       return res.status(403).send({ message: "Token non fourni !" });
 
-  const ans = await new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     jwt.verify(token, process.env.SECRET_CODE, async(err, decoded) =>{
       if (err) {
           return reject(new Error("Unauthorized!"));
@@ -83,7 +82,40 @@ module.exports.hasEnoughRight = async (req) => {
       resolve(false);
     })
   })
+};
 
-  return ans
+module.exports.canDelServices = async (req) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader) {
+    return res.status(401).json({ message: 'Authentication required' });
+  }
+
+  const token = authHeader.split(' ')[1];
+  if(!token)
+      return res.status(403).send({ message: "Token non fourni !" });
+
+  return new Promise((resolve, reject) => {
+    jwt.verify(token, process.env.SECRET_CODE, async(err, decoded) =>{
+      if (err) {
+          return reject(new Error("Unauthorized!"));
+      }
+
+      const id = decoded.id;
+      if(id == req.params.id)
+        return resolve(true);
+
+      const user =  await User.findById(id).populate("roles", "value");
+      const providerRole = await Role.findOne({name:'provider'});
+      const isHigherThanProvider = user.roles.find((u)=>{
+        return u.value > providerRole.value
+      })
+      
+      if(!isHigherThanProvider)
+        return resolve(false);
+      
+      resolve(true);
+    })
+  })
+
 };
 
