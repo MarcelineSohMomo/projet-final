@@ -9,10 +9,11 @@ import { getToken, getUser } from "../../util";
 import AdminCharts from "../../components/chartJS/AdminCharts";
 
 const Statistics = () => {
-  const [error, setError] = useState([]);
+  const [error, setError] = useState();
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [auser, setAuser] = useState();
+  const [stats, setStats] = useState();
   const token = getToken();
   const userID = getUser()._id;
 
@@ -30,6 +31,25 @@ const Statistics = () => {
         role: user.roles[0].name,
       }));
       setUsers(usersWithRole);
+    } catch (error) {
+      error.response
+        ? setError(error.response.data.message)
+        : setError("Une erreur s'est produite!");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getStatistics = async (id) => {
+    setLoading(true);
+    try {
+      const res = await api.getStats({
+        headers: {
+          Authorization: `Bearer ${token}`,
+          id,
+        },
+      });
+      setStats(res.data);
     } catch (error) {
       error.response
         ? setError(error.response.data.message)
@@ -74,6 +94,7 @@ const Statistics = () => {
                 <td className="">
                   <button
                     onClick={() => {
+                      getStatistics(user._id);
                       setAuser(user);
                       const element = document.getElementById("graphs");
                       if (element) {
@@ -90,10 +111,10 @@ const Statistics = () => {
             ))}
         </tbody>
       </table>
-      {loading && <Loading />}
       <div id="graphs" className="mt-4">
-        {auser && <AdminCharts user={auser} />}
+        {stats && <AdminCharts data={stats} user={auser} />}
       </div>
+      {loading && <Loading />}
     </div>
   );
 };

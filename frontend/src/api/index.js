@@ -124,6 +124,9 @@ const updateHistorique = (headers) =>
 const deleteHistorique = (headers) =>
   api.delete(`/historique/${headers.headers.id}`, headers);
 
+const getStats = (headers) =>
+  api.get(`/service/stats/${headers.headers.id}`, headers);
+
 export default {
   signupArtisan,
   signupModerator,
@@ -183,4 +186,5 @@ export default {
   updateHistorique,
   deleteHistorique,
   copyServiceTo,
+  getStats,
 };
