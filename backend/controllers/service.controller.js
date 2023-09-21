@@ -306,6 +306,39 @@ module.exports.searchServices = async(req, res) => {
         
         return res.status(200).send(nearService);
     } catch (err) {
+        return res.status(505).json({ message: "An error has occured", error: `${err}` });
+    }
+
+}
+
+module.exports.userServiceStats = async(req, res) => {
+    try {
+        const services = await Service.find({providerId:req.params.id})
+            .populate("listnotes","value")
+
+        if(services.length == 0)
+            return res.status(404).json({ message: "Aucun service trouvé!" });
+
+        const servStat = services.map((serv)=>{
+
+            const totalNote = serv.listnotes.reduce((total, note)=>{
+                return total + note.value;
+            },0);
+
+            const avgNote = totalNote/serv.listnotes.length;
+
+            return {
+                _id: serv._id,
+                name: serv.name,
+                noCommandes: serv.listcommandes.length,
+                noLikes: serv.likers.length,
+                avgRating: avgNote,
+            };
+
+        })
+
+        return res.status(200).send(servStat);
+    } catch (err) {
         console.log(err)
         return res.status(505).json({ message: "An error has occured", error: `${err}` });
     }

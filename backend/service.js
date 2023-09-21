@@ -2,7 +2,7 @@ const { signUpUser, signin, signUpArtisan, signUpModerator } = require("./contro
 const { addRoleForUser, deleteRole, getRoles, findRole, updateRole, xxxxxxxxxx } = require("./controllers/role.controller");
 const { like, favorite } = require("./controllers/favorite.controller");
 const { updateUser, deleteUser, findUser, getUsers, getAdminInfo, getUsersWithoutCustomer, updateAvailability, getUsersAndNotification } = require("./controllers/user.controller");
-const { createService, readService, readServices, searchServices, updateService, deleteService, deleteAllUserService, readServiceByProviderId, findFavoriteService, copyServiceTo } = require("./controllers/service.controller");
+const { createService, readService, readServices, searchServices, updateService, deleteService, deleteAllUserService, userServiceStats, readServiceByProviderId, findFavoriteService, copyServiceTo } = require("./controllers/service.controller");
 const { note, readNotes, readServiceNotes, deleteNote, readUserNotes } = require("./controllers/note.controller");
 const { readComment, readComments, createComment, deleteComment, updateComment, readCommentsByTabIds, getPrivateComments } = require("./controllers/comment.controller");
 const { uploadImg } = require("./controllers/upload.controller");
@@ -133,6 +133,12 @@ class Service{
         const test = await canDelServices(req)
         if(test)
             return await deleteAllUserService(req, res);
+    }
+    
+    async userServiceStats_(req, res){
+        const test = await hasRight(req,2)
+        if(test)
+            return await userServiceStats(req, res);
     }
 
     async noteService(req, res){
