@@ -12,8 +12,8 @@ const Statistics = () => {
   const [error, setError] = useState();
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [auser, setAuser] = useState();
-  const [stats, setStats] = useState();
+  const [auser, setAuser] = useState({});
+  const [stats, setStats] = useState([]);
   const token = getToken();
   const userID = getUser()._id;
 
@@ -32,9 +32,17 @@ const Statistics = () => {
       }));
       setUsers(usersWithRole);
     } catch (error) {
-      error.response
-        ? setError(error.response.data.message)
-        : setError("Une erreur s'est produite!");
+      if (error.response) {
+        setError(error.response.data.message);
+        setTimeout(() => {
+          setError("");
+        }, "5000");
+      } else {
+        setError("Une erreur s'est produite!");
+        setTimeout(() => {
+          setError("");
+        }, "5000");
+      }
     } finally {
       setLoading(false);
     }
@@ -51,9 +59,18 @@ const Statistics = () => {
       });
       setStats(res.data);
     } catch (error) {
-      error.response
-        ? setError(error.response.data.message)
-        : setError("Une erreur s'est produite!");
+      if (error.response) {
+        setStats([]);
+        setError(error.response.data.message);
+        setTimeout(() => {
+          setError("");
+        }, "5000");
+      } else {
+        setError("Une erreur s'est produite!");
+        setTimeout(() => {
+          setError("");
+        }, "5000");
+      }
     } finally {
       setLoading(false);
     }
@@ -112,7 +129,7 @@ const Statistics = () => {
         </tbody>
       </table>
       <div id="graphs" className="mt-4">
-        {stats && <AdminCharts data={stats} user={auser} />}
+        {stats.length > 0 && <AdminCharts data={stats} user={auser} />}
       </div>
       {loading && <Loading />}
     </div>
