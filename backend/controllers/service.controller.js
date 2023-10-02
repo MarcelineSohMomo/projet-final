@@ -1,6 +1,5 @@
 const { Service, User, Categorie, Comment, Note, Role } = require("../models");
 const haversine = require("haversine-distance");
-const MAX_DISTANCE = 1000_000 // en metre
 
 
 const variablesIsEmpty = (req, res) => {
@@ -293,12 +292,15 @@ module.exports.searchServices = async(req, res) => {
         if(services.length == 0)
             return res.status(404).json({ message: "Aucun service trouvé!" });
 
+        if(!req.query.dis || !req.query.lat || !req.query.lng)
+            return res.status(200).send(services);
+
         //Filtrer la liste des services en fonction de la distance entre le service le rechercheur
         const nearService = services.filter((s)=>{
             if(!s.geolocalisation)//Si les donnees de la localisation n'existe pas,
                 return true
             const distance = haversine(s.geolocalisation, {lat:parseFloat(req.query.lat), lng:parseFloat(req.query.lng)});
-            return (distance <= MAX_DISTANCE )? true: false
+            return (distance <= parseInt(req.query.dis) )? true: false
         });
 
         if(nearService.length == 0)

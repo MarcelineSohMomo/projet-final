@@ -32,6 +32,9 @@ module.exports.hasRight = async (req,num) => {
       const id = decoded.id;
       const user =  await User.findById(id).populate("roles", "value");
 
+      if(req?.params?.id == id)
+        return resolve(true);
+
       for (let role of user.roles) {
         if(role.value > num){
           return resolve(true);
