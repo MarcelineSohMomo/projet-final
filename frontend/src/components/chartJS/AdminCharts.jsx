@@ -30,9 +30,11 @@ const AdminCharts = ({ user, data, role }) => {
       },
       title: {
         display: true,
-        text: `Statistiques pour les services de ${
-          lastname + " " + firstname
-        } (${role ? role : user.role})`,
+        text: role
+          ? "Les Statistiques de vos Services"
+          : `Statistiques pour les services de ${lastname + " " + firstname} (${
+              user.role
+            })`,
       },
     },
   };

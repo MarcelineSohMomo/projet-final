@@ -151,7 +151,7 @@ const AccueilServices = () => {
                   className="rounded border-sm bg-transparent px-2"
                   style={{ marginRight: 4, outline: "none" }}
                   type="text"
-                  value={query}
+                  value={distance}
                   onChange={(e) => setDistance(e.target.value)}
                   placeholder="Tapez la distance en km"
                 />
