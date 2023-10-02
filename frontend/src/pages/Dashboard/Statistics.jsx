@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
 import api from "../../api";
-import ServerMessage from "../../components/serverMessage/ServerMessage";
-import { Row, Col, Carousel } from "react-bootstrap";
 import Loading from "../../components/loading/Loading";
-import { useTable } from "react-table";
 import { getToken, getUser } from "../../util";
 import AdminCharts from "../../components/chartJS/AdminCharts";
 
@@ -16,6 +12,7 @@ const Statistics = () => {
   const [stats, setStats] = useState([]);
   const token = getToken();
   const userID = getUser()._id;
+  const userRole = getUser().roles[0].name;
 
   const getUsers = async () => {
     setLoading(true);
@@ -49,8 +46,8 @@ const Statistics = () => {
   };
 
   const getStatistics = async (id) => {
-    setLoading(true);
     try {
+      setLoading(true);
       const res = await api.getStats({
         headers: {
           Authorization: `Bearer ${token}`,
@@ -78,6 +75,7 @@ const Statistics = () => {
 
   useEffect(() => {
     getUsers();
+    userRole === "provider" && getStatistics(userID);
   }, []);
 
   return (
@@ -87,50 +85,63 @@ const Statistics = () => {
     >
       {error && <p className="text-danger">{error}</p>}
       {/* get all users who are not customers on click of user, hit endpoint to get chart data and display charts for that user's services */}
-      <table className="table">
-        <thead>
-          <tr className="title">
-            <th>First name</th>
-            <th>Last name</th>
-            <th>Phone</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users
-            .filter((user) => user.role !== "customer")
-            .map((user) => (
-              <tr key={user._id}>
-                <td className="text-table">{user.firstname}</td>
-                <td className="text-table">{user.lastname}</td>
-                <td className="text-table">{user.phone}</td>
-                <td className="text-table">{user.email}</td>
-                <td className="text-table">{user.role}</td>
-                <td className="">
-                  <button
-                    onClick={() => {
-                      getStatistics(user._id);
-                      setAuser(user);
-                      const element = document.getElementById("graphs");
-                      if (element) {
-                        // 👇 Will scroll smoothly to the top of the next section
-                        element.scrollIntoView({ behavior: "smooth" });
-                      }
-                    }}
-                    className="btn btn-secondary"
-                  >
-                    Statistiques
-                  </button>
-                </td>
+      {userRole !== "provider" && (
+        <>
+          <table className="table">
+            <thead>
+              <tr className="title">
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Actions</th>
               </tr>
-            ))}
-        </tbody>
-      </table>
-      <div id="graphs" className="mt-4">
-        {stats.length > 0 && <AdminCharts data={stats} user={auser} />}
-      </div>
+            </thead>
+            <tbody>
+              {users
+                .filter((user) => user.role !== "customer")
+                .map((user) => (
+                  <tr key={user._id}>
+                    <td className="text-table">{user.firstname}</td>
+                    <td className="text-table">{user.lastname}</td>
+                    <td className="text-table">{user.phone}</td>
+                    <td className="text-table">{user.email}</td>
+                    <td className="text-table">{user.role}</td>
+                    <td className="">
+                      <button
+                        onClick={() => {
+                          getStatistics(user._id);
+                          setAuser(user);
+                          const element = document.getElementById("graphs");
+                          if (element) {
+                            // 👇 Will scroll smoothly to the top of the next section
+                            element.scrollIntoView({ behavior: "smooth" });
+                          }
+                        }}
+                        className="btn btn-secondary"
+                      >
+                        Statistiques
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+          <div id="graphs" className="mt-4">
+            {stats.length > 0 && <AdminCharts data={stats} user={auser} />}
+          </div>
+        </>
+      )}
+      {userRole === "provider" && (
+        <div id="graphs" className="mt-4">
+          {stats?.length > 0 ? (
+            <AdminCharts data={stats} user={getUser()} role={userRole} />
+          ) : (
+            <p>Vous n'avez pas de services, donc aucun statistiques.</p>
+          )}
+        </div>
+      )}
       {loading && <Loading />}
     </div>
   );

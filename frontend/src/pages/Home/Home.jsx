@@ -19,6 +19,7 @@ const AccueilServices = () => {
   const [services, setServices] = useState([]);
   const [clickedMemberId, setClickedMemberId] = useState(null);
   const [query, setQuery] = useState("");
+  const [distance, setDistance] = useState("");
   const [error, setError] = useState("");
   const [location, setLocation] = useState([]);
 
@@ -31,9 +32,10 @@ const AccueilServices = () => {
   };
 
   const handleError = () => {
-    setError(
-      "Impossible de récupérer votre localisation, vous ne pourrez pas rechercher de services"
-    );
+    setError("Impossible de récupérer votre localisation!");
+    setTimeout(() => {
+      setError("");
+    }, "2000");
   };
 
   useEffect(() => {
@@ -47,7 +49,6 @@ const AccueilServices = () => {
           })
           .then((res) => {
             setServices(res.data);
-            console.log(res);
           });
       } catch (err) {
         console.log(
@@ -68,30 +69,25 @@ const AccueilServices = () => {
   }, []);
 
   const handleSearch = async () => {
-    if (location.length === 0) {
-      setError(
-        "Vous ne pouvez pas lancer de recherche car vous n'avez pas autorisé l'accès à votre localisation. Veuillez actualiser la page et autoriser l'accès à votre localisation."
-      );
-    } else {
-      // hit endpoint to search
-      try {
-        const res = await api.searchServices({
-          headers: {
-            Authorization: `Bearer ${token}`,
-            query: query,
-            lat: location[0],
-            lng: location[1],
-          },
-        });
+    // hit endpoint to search
+    try {
+      const res = await api.searchServices({
+        headers: {
+          Authorization: `Bearer ${token}`,
+          query: query,
+          distance: parseInt(distance) * 1000,
+          lat: location[0],
+          lng: location[1],
+        },
+      });
 
-        setServices(res.data);
-        console.log(res);
-      } catch (err) {
-        setError(err?.response?.data?.message);
-        setTimeout(() => {
-          setError("");
-        }, "5000");
-      }
+      setServices(res.data);
+      console.log(res);
+    } catch (err) {
+      setError(err?.response?.data?.message);
+      setTimeout(() => {
+        setError("");
+      }, "5000");
     }
   };
 
@@ -145,11 +141,19 @@ const AccueilServices = () => {
               <div className="d-flex">
                 <input
                   className="rounded border-sm bg-transparent px-2"
-                  style={{ width: "400px", marginRight: 4, outline: "none" }}
+                  style={{ marginRight: 4, outline: "none" }}
                   type="text"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
-                  placeholder="ex: décoration"
+                  placeholder="Tapez ici pour rechercher"
+                />
+                <input
+                  className="rounded border-sm bg-transparent px-2"
+                  style={{ marginRight: 4, outline: "none" }}
+                  type="text"
+                  value={query}
+                  onChange={(e) => setDistance(e.target.value)}
+                  placeholder="Tapez la distance en km"
                 />
                 <Button
                   className="text-white rounded"

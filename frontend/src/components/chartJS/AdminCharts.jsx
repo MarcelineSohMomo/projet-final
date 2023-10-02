@@ -1,75 +1,38 @@
 import React from "react";
-import { Line } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
-  LineElement,
   CategoryScale,
   LinearScale,
-  PointElement,
+  BarElement,
   Title,
   Tooltip,
   Legend,
 } from "chart.js";
 
 ChartJS.register(
-  LineElement,
   CategoryScale,
   LinearScale,
-  PointElement,
+  BarElement,
   Title,
   Tooltip,
   Legend
 );
 
-const AdminCharts = ({ user, data }) => {
-  const { firstname, lastname, role } = user;
+const AdminCharts = ({ user, data, role }) => {
+  const { firstname, lastname } = user;
 
   const options = {
     responsive: true,
-    interaction: {
-      mode: "index",
-      intersect: false,
-    },
-    stacked: false,
     plugins: {
+      legend: {
+        position: "top",
+      },
       title: {
         display: true,
         text: `Statistiques pour les services de ${
           lastname + " " + firstname
-        } (${role})`,
-      },
-    },
-    scales: {
-      y: {
-        display: true,
-        position: "left",
-        min: 0,
-        max: 5,
-        ticks: {
-          stepSize: 1,
-        },
-      },
-      y1: {
-        display: true,
-        position: "right",
-        min: 0,
-        grid: {
-          drawOnChartArea: false,
-        },
-        ticks: {
-          stepSize: 5,
-        },
-      },
-      y2: {
-        display: false,
-        position: "right",
-        min: 0,
-        grid: {
-          drawOnChartArea: false,
-        },
-        ticks: {
-          stepSize: 5,
-        },
+        } (${role ? role : user.role})`,
       },
     },
   };
@@ -83,7 +46,6 @@ const AdminCharts = ({ user, data }) => {
         borderColor: "rgb(255, 99, 132)",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
         yAxisID: "y",
-        tension: 0.5,
       },
       {
         label: "Nombres de Favoris",
@@ -91,7 +53,6 @@ const AdminCharts = ({ user, data }) => {
         borderColor: "rgb(53, 162, 235)",
         backgroundColor: "rgba(53, 162, 235, 0.5)",
         yAxisID: "y1",
-        tension: 0.5,
       },
       {
         label: "Nombres de Commandes",
@@ -99,7 +60,6 @@ const AdminCharts = ({ user, data }) => {
         borderColor: "rgb(69, 223, 190)",
         backgroundColor: "rgb(69, 223, 190, 0.5)",
         yAxisID: "y2",
-        tension: 0.5,
       },
     ],
   };
@@ -112,7 +72,7 @@ const AdminCharts = ({ user, data }) => {
         margin: "0 auto",
       }}
     >
-      <Line data={statsData} options={options} />
+      <Bar data={statsData} options={options} />
     </div>
   );
 };
