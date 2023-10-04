@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import { getToken, getUser } from "../../util";
 import "./manageusers.scss";
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaEdit, FaLockOpen, FaTrash } from "react-icons/fa";
 import ServerMessage from "../../components/serverMessage/ServerMessage";
 import Loading from "../../components/loading/Loading";
 
@@ -23,8 +23,10 @@ const ManageUsers = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [reinitialiseDialogOpen, setReinitialiseDialogOpen] = useState(false);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [userToDelete, setUserToDelete] = useState(null);
+  const [userToReinitialise, setUserToReinitialise] = useState(null);
   const [userToEdit, setUserToEdit] = useState(null);
   const [dontTouchAdmin, setDontTouchAdmin] = useState(false);
   const [serverMessageKey, setServerMessageKey] = useState(0);
@@ -52,6 +54,16 @@ const ManageUsers = () => {
       },
     });
     setDeleteDialogOpen(false);
+    getUsers();
+  };
+
+  const handleReinitialise = async (userToReinitialise) => {
+    await api.reinitialiseUser(userToReinitialise._id, {
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+      },
+    });
+    setReinitialiseDialogOpen(false);
     getUsers();
   };
 
@@ -213,6 +225,15 @@ const ManageUsers = () => {
                 >
                   <FaTrash />{" "}
                 </span>
+                <span
+                  className="edit-icon"
+                  onClick={() => {
+                    setUserToReinitialise(user);
+                    setReinitialiseDialogOpen(true);
+                  }}
+                >
+                  <FaLockOpen />{" "}
+                </span>
               </td>
             </tr>
           ))}
@@ -237,6 +258,39 @@ const ManageUsers = () => {
             onClick={() => {
               setDeleteDialogOpen(false);
               handleDelete(userToDelete);
+            }}
+            color="primary"
+            autoFocus
+          >
+            Oui
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog
+        open={reinitialiseDialogOpen}
+        onClose={() => setReinitialiseDialogOpen(false)}
+      >
+        <DialogTitle>
+          Réinitialiser le mot de passe de l'utilisateur
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Voulez-vous vraiment réinitialiser le mot de passe de cet
+            utilisateur?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => setReinitialiseDialogOpen(false)}
+            color="primary"
+          >
+            Non
+          </Button>
+          <Button
+            onClick={() => {
+              handleReinitialise(userToReinitialise);
+              setReinitialiseDialogOpen(false);
             }}
             color="primary"
             autoFocus

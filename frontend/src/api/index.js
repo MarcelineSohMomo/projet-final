@@ -19,6 +19,8 @@ const updateUserImg = (payload, headers) =>
   api.post(`/user/upload/${headers.headers.id}`, payload, headers);
 const deleteUser = (payload, headers) =>
   api.delete(`/user/${payload}`, headers);
+const reinitialiseUser = (payload, headers) =>
+  api.put(`/user/${payload}`, headers);
 const getAdminInfo = (header) => api.get("/user/admin", header);
 const getUsers = (header) => api.get("/user/", header);
 const getUser = (header) => api.get(`/user/${header.headers.id}`, header);
@@ -151,6 +153,7 @@ export default {
   updateAvailability,
   updateUserImg,
   deleteUser,
+  reinitialiseUser,
   getComments,
   getCommentsByIds,
   postComment,
