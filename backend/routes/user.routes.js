@@ -15,6 +15,7 @@ router.delete("/:id", verifyToken, service.deleteUser_);
 router.put("/:id", verifyToken, service.updateUser_);
 router.get("/notification/:id", verifyToken, service.getUsersAndNotification_);
 router.put("/update-availability/:id", verifyToken, service.updateAvailability_);
+router.put("/reset-password/:id", verifyToken, service.resetPassword_);
 
 
 router.post("/upload/:id", verifyToken, upload.single("file"), service.uploadImg_);

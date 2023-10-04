@@ -181,6 +181,10 @@ exports.signin = async (req, res) => {
 
         if(!user)
             return res.status(400).send({ message: " Email incorrect" });
+
+        if(user.resetPassword)
+            return res.status(406).send({ message: "Le mot de passe de cet utilisateur a été reinitialiser" });
+
         var passwordValid = bcrypt.compareSync(req.body.password, user.password);
         if(!passwordValid)
             return res.status(500).json({message: " Password incorrect. "});
@@ -200,5 +204,31 @@ exports.signout = async (req, res) => {
       this.next(err);
     }
 };
+
+module.exports.changePassword = async (req, res) => {
+    if(!credentialVariablesIsEmpty(req.body)){
+        try {
+            const user = await User.findOne({ email: toLowerCase(req.body.email)});
+            if(!user)
+                return res.status(404).json({ message: "Utilisateur non-trouvé" });
+            if(!user.resetPassword)
+                return res.status(404).json({ message: "Le mot de passe de cet utilisateur ne peut etre changé" });
+
+            await User.findByIdAndUpdate(
+                user._id,
+                {
+                    password: bcrypt.hashSync(req.body.password, 10),
+                    resetPassword: false
+                }, { new: true }
+            );
+            
+            return res.status(200).json({message: "Mot de passe changé avec success"});
+        } catch (error) {
+            return res.status(500).json({ message: error });
+        }
+    }
+    else
+        return res.status(500).json({message : " Information(s) manquante(s)"})
+}
 
 

@@ -28,6 +28,7 @@ const User = new schema(
     favoriteservice: [{ type: Schema.Types.ObjectId, ref: 'service' }],
     orders: [{ type: Schema.Types.ObjectId, ref: 'order' }],
     conversations: [{ type: Schema.Types.ObjectId, ref: 'conversation' }],
+    resetPassword: { type: Boolean },
 
   },
   { timestamps: true }
