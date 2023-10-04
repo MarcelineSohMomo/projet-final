@@ -1,7 +1,7 @@
-const { signUpUser, signin, signUpArtisan, signUpModerator } = require("./controllers/auth.controller");
+const { signUpUser, signin, signUpArtisan, signUpModerator, changePassword } = require("./controllers/auth.controller");
 const { addRoleForUser, deleteRole, getRoles, findRole, updateRole, xxxxxxxxxx } = require("./controllers/role.controller");
 const { like, favorite } = require("./controllers/favorite.controller");
-const { updateUser, deleteUser, findUser, getUsers, getAdminInfo, getUsersWithoutCustomer, updateAvailability, getUsersAndNotification } = require("./controllers/user.controller");
+const { updateUser, deleteUser, findUser, getUsers, getAdminInfo, getUsersWithoutCustomer, updateAvailability, getUsersAndNotification, resetPassword } = require("./controllers/user.controller");
 const { createService, readService, readServices, searchServices, updateService, deleteService, deleteAllUserService, userServiceStats, readServiceByProviderId, findFavoriteService, copyServiceTo } = require("./controllers/service.controller");
 const { note, readNotes, readServiceNotes, deleteNote, readUserNotes } = require("./controllers/note.controller");
 const { readComment, readComments, createComment, deleteComment, updateComment, readCommentsByTabIds, getPrivateComments } = require("./controllers/comment.controller");
@@ -41,6 +41,10 @@ class Service{
         return await signout(req, res);
     }
     
+    async changePassword_(req, res){
+        return await changePassword(req, res);
+    }
+    
 
     async getUsers_(req, res){
         return await getUsers(req, res);
@@ -75,6 +79,12 @@ class Service{
 
     async deleteUser_(req, res){
         return await deleteUser(req, res);
+    }
+    
+    async resetPassword_(req, res){
+        const test = await hasRight(req, 3);
+        if(test)
+            return await resetPassword(req, res);
     }
 
     //crud service

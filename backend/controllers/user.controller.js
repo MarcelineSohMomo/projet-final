@@ -242,3 +242,16 @@ module.exports.updateUser = async(req, res) => {
     }
 
 }
+
+module.exports.resetPassword = async(req, res) => {
+    const user = await User.findByIdAndUpdate(
+        req.params.id,
+        {resetPassword: true}, { new: true }
+    );
+    if (!user)
+        return res.status(404).json({ message: "Utilisateur non trouvé pour la MAJ" });
+
+    return res.status(200).json({
+        message: `Mot de passe reinitialiser avec succes `
+    });
+}
