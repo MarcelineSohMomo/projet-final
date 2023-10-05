@@ -94,6 +94,11 @@ const deleteCommande = (hearders) =>
   api.delete(`/commande/${hearders.headers.id}`, hearders);
 const createCommande = (payload, headers) =>
   api.post("/commande/", payload, headers);
+const triCommande = (headers) =>
+  api.get(
+    `/commande/me/${headers.headers.id}?sortby=${headers.headers.sortby}&&status=${headers.headers.sortStatus}&&order=${headers.headers.order}`,
+    headers
+  );
 
 const getNotesByUser = (headers) =>
   api.get(`/note/user/${headers.headers.id}`, headers);
@@ -126,6 +131,11 @@ const updateHistorique = (headers) =>
   api.put(`/historique/${headers.headers.id}`, headers);
 const deleteHistorique = (headers) =>
   api.delete(`/historique/${headers.headers.id}`, headers);
+const triHistorique = (headers) =>
+  api.get(
+    `/historique/${headers.headers.id}?sortby=${headers.headers.sortby}&&order=${headers.headers.order}`,
+    headers
+  );
 
 const getStats = (headers) =>
   api.get(`/service/stats/${headers.headers.id}`, headers);
@@ -192,4 +202,6 @@ export default {
   deleteHistorique,
   copyServiceTo,
   getStats,
+  triHistorique,
+  triCommande,
 };
