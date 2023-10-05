@@ -58,13 +58,23 @@ const ManageUsers = () => {
   };
 
   const handleReinitialise = async (userToReinitialise) => {
-    await api.reinitialiseUser(userToReinitialise._id, {
-      headers: {
-        Authorization: `Bearer ${getToken()}`,
-      },
-    });
-    setReinitialiseDialogOpen(false);
-    getUsers();
+    try {
+      const res = await api.reinitialiseUser(userToReinitialise._id, {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      });
+      setServerMessage({ message: res.data.message, type: "success" });
+      setServerMessageKey((prev) => prev + 1);
+      setReinitialiseDialogOpen(false);
+      getUsers();
+    } catch (error) {
+      setServerMessage({
+        message: error.response?.data?.message,
+        type: "error",
+      });
+      setServerMessageKey((prev) => prev + 1);
+    }
   };
 
   const handleEdit = async () => {

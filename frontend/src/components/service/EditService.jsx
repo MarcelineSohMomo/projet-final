@@ -54,13 +54,12 @@ const EditService = ({ service, setReLoading }) => {
     try {
       setIsLoading(!isLoading);
 
-      await api.updateService(allData, header).then((res) => {
-        setServerMessage({
-          message: res.data.message,
-          type: "success",
-        });
-        navigate("/dashboard/services");
+      const res = await api.updateService(allData, header);
+      setServerMessage({
+        message: res.data.message,
+        type: "success",
       });
+      navigate("/dashboard/services");
       setInputs(service.tarification);
       setReLoading(true);
     } catch (error) {

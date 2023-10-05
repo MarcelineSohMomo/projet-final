@@ -93,22 +93,23 @@ const Dashboard = () => {
                           Services
                         </Nav.Link>
                       </Nav.Item>
+                      <Nav.Item>
+                        <Nav.Link
+                          className="dashboard-navlink"
+                          as={Link}
+                          to="/dashboard/statistics"
+                          style={
+                            location.pathname === "/dashboard/statistics"
+                              ? { ...navLinkStyle, ...activeNavLinkStyle }
+                              : navLinkStyle
+                          }
+                        >
+                          Statistiques
+                        </Nav.Link>
+                      </Nav.Item>
                     </>
                   )}
-                  <Nav.Item>
-                    <Nav.Link
-                      className="dashboard-navlink"
-                      as={Link}
-                      to="/dashboard/statistics"
-                      style={
-                        location.pathname === "/dashboard/statistics"
-                          ? { ...navLinkStyle, ...activeNavLinkStyle }
-                          : navLinkStyle
-                      }
-                    >
-                      Statistiques
-                    </Nav.Link>
-                  </Nav.Item>
+
                   <Nav.Item>
                     <Nav.Link
                       className="dashboard-navlink"

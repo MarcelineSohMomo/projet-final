@@ -9,6 +9,7 @@ const signupArtisan = (payload) => api.post("/auth/signup-artisan", payload);
 const signupModerator = (payload) =>
   api.post("/auth/signup-moderator", payload);
 const signin = (payload) => api.post("/auth/signin", payload);
+const changepassword = (payload) => api.post("/auth/new-pasword", payload);
 const signout = (payload) => api.put("/auth/signout/:id", payload);
 
 const updateUser = (payload, headers) =>
@@ -20,7 +21,7 @@ const updateUserImg = (payload, headers) =>
 const deleteUser = (payload, headers) =>
   api.delete(`/user/${payload}`, headers);
 const reinitialiseUser = (payload, headers) =>
-  api.put(`/user/${payload}`, headers);
+  api.put(`/user/reset-password/${payload}`, payload, headers);
 const getAdminInfo = (header) => api.get("/user/admin", header);
 const getUsers = (header) => api.get("/user/", header);
 const getUser = (header) => api.get(`/user/${header.headers.id}`, header);
@@ -134,6 +135,7 @@ export default {
   signupModerator,
   signup,
   signin,
+  changepassword,
   signout,
   createService,
   searchServices,
