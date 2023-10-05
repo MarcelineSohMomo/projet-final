@@ -47,8 +47,16 @@ exports.getHistorique = async (req, res) => {
             message: `Donnée manquante. Id: ${req.params.id} `
         })
     try {
-        const historique = await Historique.find({userId: req.params.id})
-        .populate('comments serviceId');
+        
+        const query = {userId: req.params.id};
+        const order = req?.query?.order||1;
+        const sort = {};
+        if(req.query.sortby == 'date')
+            sort.createdAt = order
+
+        const historique = await Historique.find(query)
+        .populate('comments serviceId')
+        .sort(sort);
         return res.status(200).json(historique);
     } catch (error) {
         console.log(error)
@@ -61,9 +69,9 @@ exports.getHistorique = async (req, res) => {
 
 exports.updateHistorique = async (req, res) => {
     if(!req.params.id)
-    return res.status(200).json({
-        message: `Donnée manquante. Id: ${req.params.id} `
-    })
+        return res.status(200).json({
+            message: `Donnée manquante. Id: ${req.params.id} `
+        })
     try {
         const updatedHistorique = await Historique.findByIdAndUpdate(req.params.id, req.body, { new: true });
         res.status(200).json({

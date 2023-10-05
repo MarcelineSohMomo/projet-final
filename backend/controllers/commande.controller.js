@@ -67,35 +67,57 @@ exports.getCommande = async (req, res) => {
 };
 
 exports.getCommandeByUserId = async (req, res) => {
-  const { id } = req.params;
-  
-  try {
-      const commande = await Commande.find({customer: id})
-      .populate('customer')
-      .populate({
-          path: 'serviceId',
-          populate : {
-              path: 'providerId',
-          }
-      });
-        return res.status(200).json(commande);
-  } catch (error) {
-        return res.status(500).json({ error: error.message });
-  }
-};
-
-exports.getCommandeByProvider = async (req, res) => {
     const { id } = req.params;
-    
+
     try {
-        const commande = await Commande.find({provider: id})
+        const order = req?.query?.order||1;
+        const sort = {};
+        const query = {customer: id};
+        if(req.query.status)
+            query.status = req.query.status.toLowerCase()
+        if(req.query.sortby == 'name')
+            sort.name = order
+        else if(req.query.sortby == 'date')
+            sort.createdAt = order
+        
+        const commande = await Commande.find(query)
         .populate('customer')
         .populate({
             path: 'serviceId',
             populate : {
                 path: 'providerId',
             }
-        });
+        })
+        .sort(sort);
+        return res.status(200).json(commande);
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+};
+
+exports.getCommandeByProvider = async (req, res) => {
+    const { id } = req.params;
+    
+    try {
+        const order = req?.query?.order||1;
+        const sort = {};
+        const query = { provider: id};
+        if(req.query.status)
+            query.status = req.query.status.toLowerCase()
+        if(req.query.sortby == 'name')
+            sort.name = order
+        else if(req.query.sortby == 'date')
+            sort.createdAt = order
+
+        const commande = await Commande.find(query)
+        .populate('customer')
+        .populate({
+            path: 'serviceId',
+            populate : {
+                path: 'providerId',
+            }
+        })
+        .sort(sort);
           return res.status(200).json(commande);
     } catch (error) {
           return res.status(500).json({ error: error.message });
