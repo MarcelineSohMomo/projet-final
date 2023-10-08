@@ -1,4 +1,4 @@
-const { Service, User, Categorie, Comment, Note, Role } = require("../models");
+const { Service, User, Categorie, Comment, Note, Role, Commande } = require("../models");
 const haversine = require("haversine-distance");
 
 
@@ -203,9 +203,11 @@ module.exports.deleteService = async(req, res) => {
         if (!user)
             return res.status(404).json({ message: "Le prestataire du service est introuvable" });
         user.listservices.pull(deletedService._id);
-        await user.save();
-        // await Comment.deleteMany({serviceId: deletedService._id});
-        // await Note.deleteMany({serviceId: deletedService._id});
+
+        await Promise.all([
+            user.save(),
+            Commande.updateMany({serviceId: req.params.id, status:'pending'},{status:'cancelled'})
+        ]) 
         return res.status(200).json({ message: "Service supprimée  avec success !" });
     } catch (error) {
         console.log(error)
