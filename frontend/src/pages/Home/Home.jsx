@@ -13,9 +13,11 @@ import img01 from "../../assets/images/jakob-owens-15IJv-APJSE-unsplash.jpg";
 import img02 from "../../assets/images/jakob-owens-DhS2f0QO7z4-unsplash.jpg";
 import img03 from "../../assets/images/jakob-owens-DQPP9rVLYGQ-unsplash.jpg";
 import { Button } from "react-bootstrap";
+import Loading from "../../components/loading/Loading";
 
 const AccueilServices = () => {
   const token = localStorage.getItem("token");
+  const [loading, setLoading] = useState(false);
   const [services, setServices] = useState([]);
   const [clickedMemberId, setClickedMemberId] = useState(null);
   const [query, setQuery] = useState("");
@@ -69,25 +71,28 @@ const AccueilServices = () => {
   }, []);
 
   const handleSearch = async () => {
-    // hit endpoint to search
     try {
+      setLoading(true);
+
       const res = await api.searchServices({
         headers: {
           Authorization: `Bearer ${token}`,
           query: query,
-          distance: parseInt(distance) * 1000,
-          lat: location[0],
-          lng: location[1],
+          distance: distance ? `&dis=${parseInt(distance) * 1000}` : "",
+          lat: location[0] ? `&lat=${location[0]}` : "",
+          lng: location[1] ? `&lng=${location[1]}` : "",
         },
       });
 
       setServices(res.data);
-      console.log(res);
+      console.log(res.data);
     } catch (err) {
       setError(err?.response?.data?.message);
       setTimeout(() => {
         setError("");
       }, "5000");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -137,6 +142,7 @@ const AccueilServices = () => {
         </Carousel>
         <ServicesBackground>
           <div class="d-flex flex-column align-items-center pt-4">
+            {loading && <Loading />}
             <div>
               <div className="d-flex">
                 <input

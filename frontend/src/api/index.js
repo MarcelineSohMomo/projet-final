@@ -35,7 +35,10 @@ const createService = (payload, headers) =>
 const services = (payload) => api.get("/service", payload);
 const searchServices = (headers) =>
   api.get(
-    `/service/search?key=${headers.headers.query}&lat=${headers.headers.lat}&lng=${headers.headers.lng}&dis=${headers.headers.distance}`,
+    `/service/search?key=${headers.headers.query}` +
+      headers.headers.lat +
+      headers.headers.lng +
+      headers.headers.distance,
     headers
   );
 const getService = (headers) =>
